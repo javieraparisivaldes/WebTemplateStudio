@@ -3,7 +3,7 @@ import classnames from "classnames";
 import * as React from "react";
 import { connect } from "react-redux";
 
-import Card from "../../../components/Card";
+import Card from "./Card";
 
 import styles from "./styles.module.css";
 import * as AzureActions from "../../../actions/azureActions/logOutAzure";
@@ -73,25 +73,6 @@ class AzureSubscriptions extends React.Component<Props, IState> {
     }
     return formatMessage(messages.addResource);
   };
-
-  /**
-   * Returns a function that opens a modal for a specific internalName
-   * @param internalName internal name of service within Core Engine
-   */
-  public getServicesModalOpener(internalName: string): () => void {
-    const modalOpeners = {
-      [WIZARD_CONTENT_INTERNAL_NAMES.COSMOS_DB]: this.props.openCosmosDbModal,
-      [WIZARD_CONTENT_INTERNAL_NAMES.AZURE_FUNCTIONS]: this.props
-        .openAzureFunctionsModal,
-      [WIZARD_CONTENT_INTERNAL_NAMES.APP_SERVICE]: this.props
-        .openAppServiceModal
-    };
-    if (modalOpeners.hasOwnProperty(internalName)) {
-      return modalOpeners[internalName];
-    }
-    return () => void(0);
-  }
-
   /**
    * Returns internal name of Azure cloud hosting service that has been created
    * If no service has been created yet, returns null
@@ -145,12 +126,8 @@ class AzureSubscriptions extends React.Component<Props, IState> {
                       buttonText={this.addOrEditResourceText(
                         option.internalName
                       )}
-                      handleButtonClick={
-                        isLoggedIn
-                          ? this.getServicesModalOpener(option.internalName)
-                          : () => openAzureLoginModal(option.internalName)
-                      }
                       handleDetailsClick={setDetailPage}
+                      isLoggedIn={isLoggedIn}
                     />
                   </div>
                 );
