@@ -115,7 +115,11 @@ Example:
  }
 ```
 
-NOTE: currently, we are developing [extensionService.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/client/src/utils/extensionService/extensionService.ts) that will handle communication between client and extension through promises and will offer a simple and centralized way to call extension commands and receive responses.
+We encapsulate the communication between client and extension on: 
+[extensionService.ts](https://github.com/microsoft/WebTemplateStudio/blob/dev/src/client/src/utils/extensionService/extensionService.ts) 
+
+When you only need one request, the services response a promise.
+When you need status messages until the request finishes, the services response a rx observable.
 
 ### Extension to client
 
